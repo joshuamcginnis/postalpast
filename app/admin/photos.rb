@@ -11,7 +11,7 @@ ActiveAdmin.register Photo do
     column :face
 
     column 'Image' do |photo|
-      image_tag(photo.image_url)
+      image_tag(photo.image.derivation_url(:thumbnail, 300, 200))
     end
 
     actions
