@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema[7.0].define(version: 2022_08_02_172054) do
+ActiveRecord::Schema[7.0].define(version: 2022_08_03_003058) do
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
 
@@ -33,7 +33,7 @@ ActiveRecord::Schema[7.0].define(version: 2022_08_02_172054) do
     t.string "addressed_to_name"
     t.string "addressed_from_name"
     t.text "addressed_to_message"
-    t.boolean "color"
+    t.boolean "color", default: true
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
     t.string "subject"
