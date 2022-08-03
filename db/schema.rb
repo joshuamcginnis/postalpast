@@ -10,8 +10,9 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema[7.0].define(version: 2022_08_03_205214) do
+ActiveRecord::Schema[7.0].define(version: 2022_08_03_213131) do
   # These are extensions that must be enabled in order to support this database
+  enable_extension "hstore"
   enable_extension "plpgsql"
 
   create_table "active_admin_comments", force: :cascade do |t|
@@ -38,6 +39,10 @@ ActiveRecord::Schema[7.0].define(version: 2022_08_03_205214) do
     t.datetime "updated_at", null: false
     t.string "subject"
     t.datetime "postmarked_at"
+    t.hstore "subject_address"
+    t.hstore "postmark_address"
+    t.hstore "to_address"
+    t.hstore "from_address"
   end
 
   create_table "photos", force: :cascade do |t|
@@ -54,6 +59,7 @@ ActiveRecord::Schema[7.0].define(version: 2022_08_03_205214) do
     t.bigint "artifact_id", null: false
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
+    t.hstore "address"
     t.index ["artifact_id"], name: "index_publishers_on_artifact_id"
   end
 

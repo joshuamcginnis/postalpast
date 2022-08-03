@@ -48,10 +48,16 @@ ActiveAdmin.register Artifact do
 
     attributes_table do
       row :subject
+      row :subject_address
       row :addressed_to_name
-      row :addressed_from_name
       row :addressed_to_message
+      row :to_address
+      row :addressed_from_name
+      row :from_address
       row :color
+      row :postmarked?
+      row :postmarked_at
+      row :postmark_address
       row :created_at
       row :updated_at
     end
