@@ -2,6 +2,8 @@ ActiveAdmin.register Artifact do
   permit_params :kind, :addressed_to_name, :addressed_from_name,
     :addressed_to_message, :color, :subject, :postmarked_at
 
+  config.sort_order = 'created_at_asc'
+
   index do
     selectable_column
 
@@ -12,6 +14,8 @@ ActiveAdmin.register Artifact do
               target: '_blank')
     end
 
+    column :subject_address
+    column :subject_date
     column :color
     column :postmarked?
     column :postmarked_at

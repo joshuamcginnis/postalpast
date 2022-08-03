@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema[7.0].define(version: 2022_08_03_213131) do
+ActiveRecord::Schema[7.0].define(version: 2022_08_03_213716) do
   # These are extensions that must be enabled in order to support this database
   enable_extension "hstore"
   enable_extension "plpgsql"
@@ -43,6 +43,7 @@ ActiveRecord::Schema[7.0].define(version: 2022_08_03_213131) do
     t.hstore "postmark_address"
     t.hstore "to_address"
     t.hstore "from_address"
+    t.datetime "subject_date"
   end
 
   create_table "photos", force: :cascade do |t|
