@@ -14,6 +14,8 @@ ActiveAdmin.register Photo do
       image_tag(photo.image.derivation_url(:thumbnail, 300, 200))
     end
 
+    column :created_at
+
     actions
   end
 

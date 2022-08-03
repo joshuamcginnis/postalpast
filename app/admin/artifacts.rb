@@ -1,8 +1,11 @@
 ActiveAdmin.register Artifact do
-  permit_params :kind, :addressed_to_name, :addressed_from_name, :addressed_to_message, :color, :subject
+  permit_params :kind, :addressed_to_name, :addressed_from_name,
+    :addressed_to_message, :color, :subject, :postmarked_at
 
   index do
     selectable_column
+
+    column :id
 
     column 'Subject' do |artifact|
       link_to(artifact.subject, admin_artifact_path(artifact),
@@ -10,6 +13,8 @@ ActiveAdmin.register Artifact do
     end
 
     column :color
+    column :postmarked?
+    column :postmarked_at
 
     column 'Front' do |artifact|
       photo = artifact.photos.find_by_face(:front).image
@@ -31,6 +36,16 @@ ActiveAdmin.register Artifact do
   end
 
   show do
+    panel 'Photos' do
+      attributes_table_for artifact.photos do
+        row :face
+        row :image do |photo|
+          link_to(image_tag(photo.image.derivation_url(:thumbnail, 600, 400)),
+                  photo.image_url, target: '_blank')
+        end
+      end
+    end
+
     attributes_table do
       row :subject
       row :addressed_to_name
@@ -39,14 +54,6 @@ ActiveAdmin.register Artifact do
       row :color
       row :created_at
       row :updated_at
-    end
-
-    attributes_table_for artifact.photos do
-      row :face
-      row :image do |photo|
-        link_to(image_tag(photo.image.derivation_url(:thumbnail, 400, 200)),
-                photo.image_url)
-      end
     end
   end
 
