@@ -1,6 +1,9 @@
 ActiveAdmin.register Artifact do
-  permit_params :kind, :addressed_to_name, :addressed_from_name,
-    :addressed_to_message, :color, :subject, :postmarked_at
+  permit_params :subject_address, :kind, :addressed_to_name, :addressed_from_name,
+    :addressed_to_message, :color, :subject, :postmarked_at,
+    :addressed_to_address,
+    :addressed_from_address,
+    photos_attributes: [:id, :image, :face, :_destroy]
 
   config.sort_order = 'created_at_asc'
 
@@ -69,7 +72,78 @@ ActiveAdmin.register Artifact do
 
   form do |f|
     f.semantic_errors # shows errors on :base
-    f.inputs          # builds an input field for every attribute
-    f.actions         # adds the 'Submit' and 'Cancel' buttons
+
+    columns do
+      column do
+        panel 'Artifact Photos' do
+          if artifact.photos
+            artifact.photos.order(:face).each do |photo|
+              h3 photo.face.camelcase
+              div link_to \
+                image_tag(photo.image.derivation_url(:thumbnail, 400, 300)),
+                edit_admin_photo_path(photo), target: '_blank'
+            end
+          end
+
+          f.has_many :photos, heading: :none, allow_destroy: true do |p|
+            p.input :face, as: :select, collection: Photo.faces.keys
+            p.input :image, as: :file
+          end
+        end
+      end
+
+      column span: 3 do
+        panel 'General Subject Details' do
+          f.inputs do
+            f.input :subject, label: 'Subject Title'
+            f.input :color
+            li h4 'Subject Address'
+            f.fields_for :subject_address, label: 'Subject Address' do |a|
+              a.input :street
+              a.input :city
+              a.input :state
+              a.input :postcode
+            end
+          end
+        end
+
+        columns do
+          column do
+            f.inputs 'Addressed To Details' do
+              f.input :addressed_to_name
+              f.input :addressed_to_message, input_html: { rows: 4 }
+              f.fields_for :addressed_to_address do |a|
+                a.input :street
+                a.input :city
+                a.input :state
+                a.input :postcode
+              end
+            end
+          end
+
+          column do
+            f.inputs 'Addressed From Details' do
+              f.input :addressed_from_name
+              f.fields_for :addressed_from_address do |a|
+                a.input :street
+                a.input :city
+                a.input :state
+                a.input :postcode
+              end
+            end
+          end
+        end
+
+        f.has_many :publisher, heading: 'Publisher' do |p|
+          p.input :name
+        end
+
+        f.has_many :stamp, heading: 'Stamps' do |p|
+          p.input :name
+        end
+
+        f.actions
+      end
+    end
   end
 end
