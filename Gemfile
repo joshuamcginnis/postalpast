@@ -18,6 +18,7 @@ gem 'sassc-rails'
 gem 'shrine', '~> 3.0'
 gem 'image_processing', '~> 1.2'
 gem 'activeadmin'
+gem 'active_admin_theme'
 
 group :development, :test do
   gem 'debug', platforms: %i[ mri mingw x64_mingw ]
