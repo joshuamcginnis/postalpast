@@ -12,6 +12,7 @@
 /tmp/*
 !/log/.keep
 !/tmp/.keep
+yarn-error.log
 
 # Ignore pidfiles, but keep the directory.
 /tmp/pids/*
@@ -30,3 +31,8 @@
 
 # Ignore master key for decrypting credentials and more.
 /config/master.key
+
+/node_modules
+
+/app/assets/builds/*
+!/app/assets/builds/.keep

@@ -54,6 +54,13 @@ App domains following the following convention:
 1. **PreDeployment Checklist**
 Per the [Dokku app deployment guide](https://dokku.com/docs/deployment/application-deployment/), one must create the application and enabled plugins before deploying.
 
+Enable both buildpacks:
+dokku buildpacks:add postalpast https://github.com/heroku/heroku-buildpack-ruby.git
+dokku buildpacks:add postalpast https://github.com/heroku/heroku-buildpack-nodejs.git
+
+Set some env vars:
+dokku config:set postalpast SHRINE_SECRET_KEY=#{SecureRandom.hex for example}
+
 2. Add the remote to the local GIT repository and push
 
 Notes:
