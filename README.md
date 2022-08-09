@@ -38,3 +38,26 @@ Get started by first installing all require dependencies.
 7. Start the server! `rails s`
 8. Visit: http://localhost:3000
 
+# Hosting
+Infrastructure is managed with [Dokku](https://dokku.com/) hosted at [DigitalOcean](https://cloud.digitalocean.com/).
+
+### Domains
+Two DNS records are created to manage apps and resolve to the DO droplet:
+`app.mcginnis.io` and `*.app.mcginnis.io`
+
+App domains following the following convention:
+* **Dev**: `name.dev.app.mcginnis.io`
+* **Staging**: `name.staging.app.mcginnis.io`
+* **Production**: `name.prod.app.mcginnis.io`
+
+### Dokku Workflow
+1. **PreDeployment Checklist**
+Per the [Dokku app deployment guide](https://dokku.com/docs/deployment/application-deployment/), one must create the application and enabled plugins before deploying.
+
+2. Add the remote to the local GIT repository and push
+
+Notes:
+* Postgres details
+* Linking branches to app deployments
+* CI
+* Database migrations
