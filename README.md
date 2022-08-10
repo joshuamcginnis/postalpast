@@ -50,22 +50,49 @@ App domains following the following convention:
 * **Staging**: `name.staging.app.mcginnis.io`
 * **Production**: `name.prod.app.mcginnis.io`
 
-### Dokku Workflow
-1. **PreDeployment Checklist**
+### Dokku Usage
+**PreDeployment Checklist**
 Per the [Dokku app deployment guide](https://dokku.com/docs/deployment/application-deployment/), one must create the application and enabled plugins before deploying.
 
-Enable both buildpacks:
+```bash
+dokku apps:create postalpast
+```
+
+#### Required Buildpacks
+Both buildpacks are required to build both ruby and yarn (js) apps.
+```bash
 dokku buildpacks:add postalpast https://github.com/heroku/heroku-buildpack-ruby.git
 dokku buildpacks:add postalpast https://github.com/heroku/heroku-buildpack-nodejs.git
+```
 
-Set some env vars:
-dokku config:set postalpast SHRINE_SECRET_KEY=#{SecureRandom.hex for example}
+#### Environment Variables
+The following vars must be set prior to deployment:
+```bash
+dokku config:set postalpast ENVIRONMENT=production
+dokku config:set postalpast SHRINE_SECRET_KEY=#{SecureRandom.hex}
+```
 
-2. Add the remote to the local GIT repository and push
+#### Required Plugins
+**PostgreSQL**
+To setup PG, the plugin must be installed, the service must be created and linked to the app. Linking will set the `DATABASE_URL` environment variable.
 
-Notes:
-* Postgres details
-* Linking branches to app deployments
-* CI
-* Database migrations
+```bash
+sudo dokku plugin:install https://github.com/dokku/dokku-postgres.git
+dokku postgres:create postalpast
+dokku postgres:link postalpast postalpaste
+```
 
+#### Deploying the App
+Add the remote to the local GIT repository and push:
+```bash
+git remote add dokku dokku@app.mcginnis.io:postalpast
+git push dokku main:master
+```
+
+# TODO
+* setting up staging environment
+* CI in Git + testing
+* rails console on active deployment
+* backups
+* s3
+* password protection
