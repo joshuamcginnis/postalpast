@@ -89,6 +89,15 @@ git remote add dokku dokku@app.mcginnis.io:postalpast
 git push dokku main:master
 ```
 
+#### Running Rake Tasks and Accessing Console
+```bash
+dokku run postalpast bundle exec rake [task]
+dokku run postalpast bundle exec rails c
+```
+
+##### Disabling autocomplete in IRB & Rails Console
+Add `IRB.conf[:USE_AUTOCOMPLETE] = false` in `~/.irbrc`
+
 # TODO
 * setting up staging environment
 * CI in Git + testing
