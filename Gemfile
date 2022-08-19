@@ -22,6 +22,7 @@ gem 'active_admin_theme'
 
 group :development, :test do
   gem 'debug', platforms: %i[ mri mingw x64_mingw ]
+  gem 'rspec-rails', '~> 5.1', '>= 5.1.2'
 end
 
 group :development do
@@ -31,6 +32,8 @@ group :development do
   # gem 'rack-mini-profiler'
 
   # Speed up commands on slow machines / big apps [https://github.com/rails/spring]
-  # gem 'spring'
+  gem 'spring'
 end
 
+
+gem "tailwindcss-rails", "~> 2.0"
