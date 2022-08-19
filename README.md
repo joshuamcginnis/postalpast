@@ -70,6 +70,10 @@ The following vars must be set prior to deployment:
 ```bash
 dokku config:set postalpast ENVIRONMENT=production
 dokku config:set postalpast SHRINE_SECRET_KEY=#{SecureRandom.hex}
+dokku config:set AWS_S3_ACCESS_KEY_ID
+dokku config:set AWS_S3_SECRET_ACCESS_KEY
+dokku config:set AWS_S3_REGION
+dokku config:set AWS_S3_BUCKET
 ```
 
 #### Required Plugins
