@@ -99,9 +99,7 @@ dokku run postalpast bundle exec rails c
 Add `IRB.conf[:USE_AUTOCOMPLETE] = false` in `~/.irbrc`
 
 # TODO
-* setting up staging environment
-* CI in Git + testing
-* rails console on active deployment
-* backups
-* s3
-* password protection
+* Setup CI in Git + testing
+* Setup backup and downtime contigency plans
+* Data Entry
+* React Presentation Layer
