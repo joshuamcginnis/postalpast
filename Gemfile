@@ -20,6 +20,7 @@ gem 'image_processing', '~> 1.2'
 gem 'activeadmin'
 gem 'active_admin_theme'
 gem 'aws-sdk-s3', '~> 1.114'
+gem 'marcel', '~> 1.0', '>= 1.0.1'
 
 group :development, :test do
   gem 'debug', platforms: %i[ mri mingw x64_mingw ]
