@@ -19,10 +19,11 @@ end
 
 if Rails.env.production?
  s3_options = {
-    access_key_id:     Rails.application.secrets.aws_s3_access_key_id,
-    secret_access_key: Rails.application.secrets.aws_s3_secret_access_key,
+    access_key_id:     Rails.application.secrets.aws_access_key_id,
+    secret_access_key: Rails.application.secrets.aws_secret_access_key,
     region:            Rails.application.secrets.aws_s3_region,
-    bucket:            Rails.application.secrets.aws_s3_bucket
+    bucket:            Rails.application.secrets.aws_s3_bucket,
+    public:            true
   }
   Shrine.storages = {
     cache: Shrine::Storage::S3.new(prefix: 'cache', **s3_options),
