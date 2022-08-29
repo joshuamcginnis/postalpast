@@ -21,6 +21,7 @@ gem 'activeadmin'
 gem 'active_admin_theme'
 gem 'aws-sdk-s3', '~> 1.114'
 gem 'marcel', '~> 1.0', '>= 1.0.1'
+gem 'pry'
 
 group :development, :test do
   gem 'debug', platforms: %i[ mri mingw x64_mingw ]
