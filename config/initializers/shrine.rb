@@ -3,10 +3,12 @@ require 'shrine/storage/file_system'
 require 'shrine/storage/memory'
 require 'shrine/storage/s3'
 
+CACHE_DIR = "#{Dir.tmpdir}/cache".freeze
+
 if Rails.env.development?
   Shrine.storages = {
-    cache: Shrine::Storage::FileSystem.new('public', prefix: 'uploads/cache'), # temporary
-    store: Shrine::Storage::FileSystem.new('public', prefix: 'uploads'),       # permanent
+    cache: Shrine::Storage::FileSystem.new('public', prefix: CACHE_DIR),
+    store: Shrine::Storage::FileSystem.new('public', prefix: 'uploads')
   }
 end
 
@@ -22,17 +24,16 @@ if Rails.env.production?
     access_key_id:     Rails.application.secrets.aws_access_key_id,
     secret_access_key: Rails.application.secrets.aws_secret_access_key,
     region:            Rails.application.secrets.aws_s3_region,
-    bucket:            Rails.application.secrets.aws_s3_bucket,
-    public:            true
+    bucket:            Rails.application.secrets.aws_s3_bucket
   }
   Shrine.storages = {
-    cache: Shrine::Storage::S3.new(prefix: 'cache', **s3_options),
+    cache: Shrine::Storage::FileSystem.new(CACHE_DIR),
     store: Shrine::Storage::S3.new(prefix: 'store', **s3_options)
   }
 end
 
 
 Shrine.plugin :activerecord
-Shrine.plugin :cached_attachment_data # for retaining the cached file across form redisplays
-Shrine.plugin :restore_cached_data # re-extract metadata when attaching a cached file
+Shrine.plugin :cached_attachment_data
+Shrine.plugin :restore_cached_data
 Shrine.plugin :derivation_endpoint, secret_key: Rails.application.secrets.shrine_secret_key
