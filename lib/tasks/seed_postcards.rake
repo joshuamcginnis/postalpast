@@ -17,7 +17,7 @@ namespace :seed_postcards do
 
     puts "#{seed_images.size} seed images found."
 
-    seed_images[0...6].each_with_index do |key, index|
+    seed_images.each_with_index do |key, index|
       ActiveRecord::Base.transaction do
         artifact = index % 2 == 0 ? Artifact.create! : Artifact.last
         face = index % 2 == 0 ? :front : :back
@@ -25,15 +25,16 @@ namespace :seed_postcards do
         image_name = key.gsub("#{PREFIX}/", '')
         tmp_image = "/tmp/#{image_name}"
 
-        s3.get_object(response_target: tmp_image, bucket: bucket, key: key)
+        s3_obj = s3.get_object(bucket: bucket, key: key).body
 
         photo = Photo.new(face: face, artifact: artifact)
-        photo.image = File.open(tmp_image)
 
+        attacher = photo.image_attacher
+        uploaded_file = attacher.attach(s3_obj,
+                                        metadata: { "filename" => image_name })
         photo.save!
-        File.delete(tmp_image)
 
-        p "Added #{image_name}:#{face} to artifact #{artifact.id}."
+        p "Added #{image_name}:#{face}:#{photo.id} to artifact #{artifact.id}."
       end
     end
   end
