@@ -1,3 +1,4 @@
+# frozen_string_literal: true
 class Artifact < ApplicationRecord
   ADDRESS_FIELDS = [:subject_address,
                     :postmark_address,

@@ -1,3 +1,4 @@
+# frozen_string_literal: true
 ActiveAdmin.register Publisher do
 
   # See permitted parameters documentation:

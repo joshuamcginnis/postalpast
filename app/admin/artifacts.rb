@@ -1,3 +1,4 @@
+# frozen_string_literal: true
 ActiveAdmin.register Artifact do
   permit_params :subject_address, :kind, :addressed_to_name, :addressed_from_name,
     :addressed_to_message, :color, :subject, :postmarked_at,
