@@ -91,7 +91,7 @@ RSpec.describe Artifact do
     context 'address field is empty' do
       it 'does not attempt geocoding' do
         expect(Geocoder).not_to receive(:search)
-        described_class.create()
+        described_class.create
       end
     end
   end

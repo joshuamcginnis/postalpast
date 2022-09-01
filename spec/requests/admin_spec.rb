@@ -14,7 +14,7 @@ RSpec.describe 'Admin' do
     context 'wrong login' do
       it 'reloads the login page' do
         post '/admin/login', params: { username: 'wrong', password: 'test' }
-        #expect(response).to redirect_to(admin_login_path)
+        expect(response).to have_http_status(:ok)
       end
     end
 

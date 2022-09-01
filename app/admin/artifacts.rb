@@ -1,11 +1,17 @@
 # frozen_string_literal: true
 
 ActiveAdmin.register Artifact do
-  permit_params :subject_address, :kind, :addressed_to_name, :addressed_from_name,
-    :addressed_to_message, :color, :subject, :postmarked_at,
-    :addressed_to_address,
-    :addressed_from_address,
-    photos_attributes: [:id, :image, :face, :_destroy]
+  permit_params :subject_address,
+                :kind,
+                :addressed_to_name,
+                :addressed_from_name,
+                :addressed_to_message,
+                :color,
+                :subject,
+                :postmarked_at,
+                :addressed_to_address,
+                :addressed_from_address,
+                photos_attributes: %i[id image face _destroy]
 
   config.sort_order = 'created_at_asc'
 
@@ -16,7 +22,7 @@ ActiveAdmin.register Artifact do
 
     column 'Subject' do |artifact|
       link_to(artifact.subject, admin_artifact_path(artifact),
-              target: '_blank')
+              target: '_blank', rel: 'noopener')
     end
 
     column :subject_address
@@ -29,14 +35,14 @@ ActiveAdmin.register Artifact do
       photo = artifact.photos.find_by_face(:front).image
       link_to(image_tag(photo.derivation_url(:thumbnail, 100, 100)),
               photo.url,
-              target: '_blank')
+              target: '_blank', rel: 'noopener')
     end
 
     column 'Back' do |artifact|
       photo = artifact.photos.find_by_face(:back).image
       link_to(image_tag(photo.derivation_url(:thumbnail, 100, 100)),
               photo.url,
-              target: '_blank')
+              target: '_blank', rel: 'noopener')
     end
 
     column 'Created', :created_at
@@ -50,7 +56,7 @@ ActiveAdmin.register Artifact do
         row :face
         row :image do |photo|
           link_to(image_tag(photo.image.derivation_url(:thumbnail, 600, 400)),
-                  photo.image_url, target: '_blank')
+                  photo.image_url, target: '_blank', rel: 'noopener')
         end
       end
     end
@@ -83,7 +89,7 @@ ActiveAdmin.register Artifact do
               h3 photo.face.camelcase
               div link_to \
                 image_tag(photo.image.derivation_url(:thumbnail, 400, 300)),
-                edit_admin_photo_path(photo), target: '_blank'
+                edit_admin_photo_path(photo), target: '_blank', rel: 'noopener'
             end
           end
 
