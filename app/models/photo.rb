@@ -7,5 +7,5 @@ class Photo < ApplicationRecord
 
   belongs_to :artifact
 
-  enum :face, [:front, :back], default: :front
+  enum :face, %i[front back], default: :front
 end

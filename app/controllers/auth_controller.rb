@@ -3,8 +3,7 @@
 class AuthController < ApplicationController
   layout 'auth'
 
-  def index
-  end
+  def index; end
 
   def login
     if valid_credentials?

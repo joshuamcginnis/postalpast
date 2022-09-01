@@ -21,3 +21,6 @@ RSpec/MultipleExpectations:
 
 Style/HashSyntax:
   EnforcedShorthandSyntax: either
+
+Style/Documentation:
+  Enabled: false

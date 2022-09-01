@@ -1,16 +1,16 @@
 # frozen_string_literal: true
 
 class Artifact < ApplicationRecord
-  ADDRESS_FIELDS = [:subject_address,
-                    :postmark_address,
-                    :to_address,
-                    :from_address].freeze
+  ADDRESS_FIELDS = %i[subject_address
+                      postmark_address
+                      to_address
+                      from_address].freeze
 
   enum :kind, [:postcard], default: :postcard
 
   has_many :photos, dependent: :destroy
-  has_one :publisher
-  has_one :stamp
+  has_one :publisher, dependent: nil
+  has_one :stamp, dependent: nil
 
   accepts_nested_attributes_for :photos, allow_destroy: true
   accepts_nested_attributes_for :stamp, :publisher
@@ -19,10 +19,9 @@ class Artifact < ApplicationRecord
 
   def geocode_addresses
     self.class::ADDRESS_FIELDS.each do |field|
-      next if self[field].nil?
-      next unless self[field]['lat'].nil? || self[field]['lon'].nil?
+      next unless field_geocodable?(self[field])
 
-      full_address = self.send("full_#{field}")
+      full_address = send("full_#{field}")
       coordinates = Geocoder.search(full_address).first&.coordinates
 
       self[field]['lat'], self[field]['lon'] = coordinates if coordinates.any?
@@ -30,7 +29,7 @@ class Artifact < ApplicationRecord
   end
 
   def postmarked?
-    postmarked_at.nil? ? false : true
+    !postmarked_at.nil?
   end
 
   def full_subject_address
@@ -51,8 +50,14 @@ class Artifact < ApplicationRecord
 
   private
 
+  def field_geocodable?(address)
+    return false if address.nil?
+
+    address['lat'].nil? || address['lon'].nil?
+  end
+
   def format_full_address(address_field)
     "#{address_field['street']}, #{address_field['city']}, " \
-    "#{address_field['state']} #{address_field['postcode']}"
+      "#{address_field['state']} #{address_field['postcode']}"
   end
 end
