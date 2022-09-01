@@ -1,3 +1,4 @@
+# frozen_string_literal: true
 source 'https://rubygems.org'
 git_source(:github) { |repo| 'https://github.com/#{repo}.git' }
 
@@ -23,6 +24,9 @@ gem 'aws-sdk-s3', '~> 1.114'
 gem 'marcel', '~> 1.0', '>= 1.0.1'
 gem 'pry'
 gem 'geocoder', '~> 1.8'
+gem 'rubocop', require: false
+gem 'rubocop-rails', require: false
+gem 'rubocop-rspec', require: false
 
 group :development, :test do
   gem 'debug', platforms: %i[ mri mingw x64_mingw ]
@@ -40,4 +44,4 @@ group :development do
 end
 
 
-gem "tailwindcss-rails", "~> 2.0"
+gem 'tailwindcss-rails', '~> 2.0'
