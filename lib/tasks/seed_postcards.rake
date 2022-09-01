@@ -33,7 +33,7 @@ namespace :seed_postcards do
 
         attacher = photo.image_attacher
         uploaded_file = attacher.attach(s3_obj,
-                                        metadata: { "filename" => image_name })
+                                        metadata: { 'filename' => image_name })
         photo.save!
 
         p "Added #{image_name}:#{face}:#{photo.id} to artifact #{artifact.id}."
