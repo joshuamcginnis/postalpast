@@ -1,4 +1,5 @@
 # frozen_string_literal: true
+
 class ApplicationController < ActionController::Base
   def authenticate_admin_user!
     return true if session[:user] && session[:user]['admin'] == true

@@ -12,3 +12,6 @@ AllCops:
     - 'db/**/*'
     - 'tmp/**/*'
     - 'vendor/**/*'
+
+Metrics/BlockLength:
+  Max: 150

@@ -1,4 +1,5 @@
 # frozen_string_literal: true
+
 require 'rails_helper'
 require 'geocoder/results/nominatim'
 
@@ -73,12 +74,13 @@ RSpec.describe Artifact do
       end
 
       it 'method is called after_validation' do
-        subject = described_class.create(postmark_address: {
-          street: '239 Franklin Rd',
-          city: 'Franklin',
-          state: 'TN',
-          postcode: '37064'
-        })
+        subject = described_class.create(
+          postmark_address: {
+            street: '239 Franklin Rd',
+            city: 'Franklin',
+            state: 'TN',
+            postcode: '37064'
+          })
 
         expect(Geocoder).to have_received(:search)
         expect(subject.postmark_address['lat']).to eq('123')
