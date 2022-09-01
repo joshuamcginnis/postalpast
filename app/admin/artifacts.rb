@@ -32,14 +32,14 @@ ActiveAdmin.register Artifact do
     column :postmarked_at
 
     column 'Front' do |artifact|
-      photo = artifact.photos.find_by_face(:front).image
+      photo = artifact.photos.find_by(face: :front).image
       link_to(image_tag(photo.derivation_url(:thumbnail, 100, 100)),
               photo.url,
               target: '_blank', rel: 'noopener')
     end
 
     column 'Back' do |artifact|
-      photo = artifact.photos.find_by_face(:back).image
+      photo = artifact.photos.find_by(face: :back).image
       link_to(image_tag(photo.derivation_url(:thumbnail, 100, 100)),
               photo.url,
               target: '_blank', rel: 'noopener')
@@ -84,7 +84,7 @@ ActiveAdmin.register Artifact do
     columns do
       column do
         panel 'Artifact Photos' do
-          if artifact.photos
+          if artifact&.photos
             artifact.photos.order(:face).each do |photo|
               h3 photo.face.camelcase
               div link_to \
