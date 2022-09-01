@@ -1,4 +1,9 @@
 class Artifact < ApplicationRecord
+  ADDRESS_FIELDS = [:subject_address,
+                    :postmark_address,
+                    :to_address,
+                    :from_address].freeze
+
   enum :kind, [:postcard], default: :postcard
 
   has_many :photos, dependent: :destroy
@@ -7,6 +12,20 @@ class Artifact < ApplicationRecord
 
   accepts_nested_attributes_for :photos, allow_destroy: true
   accepts_nested_attributes_for :stamp, :publisher
+
+  after_validation :geocode_addresses
+
+  def geocode_addresses
+    self.class::ADDRESS_FIELDS.each do |field|
+      next if self[field].nil?
+      next unless self[field]['lat'].nil? || self[field]['lon'].nil?
+
+      full_address = self.send("full_#{field}")
+      coordinates = Geocoder.search(full_address).first&.coordinates
+
+      self[field]['lat'], self[field]['lon'] = coordinates if coordinates.any?
+    end
+  end
 
   def postmarked?
     postmarked_at.nil? ? false : true
