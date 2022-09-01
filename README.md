@@ -102,8 +102,3 @@ dokku run postalpast bundle exec rails c
 ##### Disabling autocomplete in IRB & Rails Console
 Add `IRB.conf[:USE_AUTOCOMPLETE] = false` in `~/.irbrc`
 
-# TODO
-* Setup CI in Git + testing
-* Setup backup and downtime contigency plans
-* Data Entry
-* React Presentation Layer
