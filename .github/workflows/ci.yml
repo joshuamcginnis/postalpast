@@ -18,13 +18,14 @@ jobs:
     steps:
       - uses: actions/checkout@v1
       - name: Setup Ruby
-        uses: actions/setup-ruby@v1
+        uses: ruby/setup-ruby@v1
         with:
-          ruby-version: 3.1.x
-      - name: Setup node
+          bundler-cache: true
+      - name: Setup NodeJS
         uses: actions/setup-node@v3
         with:
-          cmd: yarn install
+          node-version-file: '.nvmrc'
+          cache: 'npm'
       - name: Build and run tests
         env:
           DATABASE_URL: postgres://postgres:postgres@localhost:5432/test
