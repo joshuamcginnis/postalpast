@@ -87,5 +87,15 @@ RSpec.describe Artifact do
         expect(Geocoder).not_to have_received(:search)
       end
     end
+
+    context 'when there are no results' do
+      before { allow(Geocoder).to receive(:search).and_return([]) }
+
+      it 'does not update lat, lon' do
+        artifact.save
+        expect(artifact.subject_address['lat']).to be_nil
+        expect(artifact.subject_address['lon']).to be_nil
+      end
+    end
   end
 end

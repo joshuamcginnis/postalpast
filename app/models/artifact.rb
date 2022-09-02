@@ -24,7 +24,7 @@ class Artifact < ApplicationRecord
       full_address = send("full_#{field}")
       coordinates = Geocoder.search(full_address).first&.coordinates
 
-      self[field]['lat'], self[field]['lon'] = coordinates if coordinates.any?
+      self[field]['lat'], self[field]['lon'] = coordinates if coordinates
     end
   end
 
