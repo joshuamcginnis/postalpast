@@ -1,5 +1,5 @@
 name: Verification Checks
-on: [push, pull_request]
+on: [push]
 jobs:
   linters:
     name: Linters
