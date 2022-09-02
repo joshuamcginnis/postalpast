@@ -1,7 +1,30 @@
 name: CI
 on: [push, pull_request]
 jobs:
-  test:
+  linters:
+    name: Linters
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout code
+        uses: actions/checkout@v2
+
+      - name: Setup Ruby and install gems
+        uses: ruby/setup-ruby@v1
+        with:
+          bundler-cache: true
+
+      - name: Setup NodeJS
+        uses: actions/setup-node@v3
+        with:
+          node-version-file: '.nvmrc'
+          cache: yarn
+
+      - name: Run linters
+        run: |
+          bin/rubocop --parallel
+
+  tests:
+    name: Tests
     runs-on: ubuntu-latest
     services:
       db:
@@ -16,23 +39,30 @@ jobs:
           --health-retries 5
 
     steps:
-      - uses: actions/checkout@v1
-      - name: Setup Ruby
+      - name: Checkout code
+        uses: actions/checkout@v2
+
+      - name: Setup Ruby and install gems
         uses: ruby/setup-ruby@v1
         with:
           bundler-cache: true
+
       - name: Setup NodeJS
         uses: actions/setup-node@v3
         with:
           node-version-file: '.nvmrc'
-          cache: 'npm'
+          cache: yarn
+
+      - name: Build assets
+        run: |
+          yarn install --pure-lockfile
+          bundle exec rake assets:precompile
+
       - name: Build and run tests
         env:
           DATABASE_URL: postgres://postgres:postgres@localhost:5432/test
           RAILS_ENV: test
         run: |
-          sudo apt-get -yqq install libpq-dev
-          gem install bundler
-          bundle install --jobs 4 --retry 3
+          #sudo apt-get -yqq install libpq-dev
           bundle exec rails db:prepare
           bundle exec rspec
