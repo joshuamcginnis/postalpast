@@ -7,6 +7,8 @@ jobs:
       db:
         image: postgres:11
         ports: ['5432:5432']
+        env:
+          POSTGRES_PASSWORD: postgres
         options: >-
           --health-cmd pg_isready
           --health-interval 10s
@@ -24,7 +26,7 @@ jobs:
           cmd: install
       - name: Build and run tests
         env:
-          DATABASE_URL: postgres://postgres:@localhost:5432/test
+          DATABASE_URL: postgres://postgres:postgres@localhost:5432/test
           RAILS_ENV: test
         run: |
           sudo apt-get -yqq install libpq-dev
