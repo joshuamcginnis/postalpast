@@ -25,7 +25,7 @@ jobs:
 
       - name: Run security checks
         run: |
-          bundle exec rake bundler-audit --update
+          bundle exec bundler-audit --update
           bundle exec brakeman -q -w2
   tests:
     name: Tests
