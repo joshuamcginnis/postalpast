@@ -21,8 +21,12 @@ jobs:
 
       - name: Run linters
         run: |
-          bundle exec rubocop --parallel
+          bin/rubocop --parallel
 
+      - name: Run security checks
+        run: |
+          bundle exec rake bundler-audit --update
+          bin/brakeman -q -w2
   tests:
     name: Tests
     runs-on: ubuntu-latest
