@@ -1,0 +1,26 @@
+require:
+  - rubocop-rails
+  - rubocop-rspec
+
+AllCops:
+  TargetRubyVersion: 3.1
+  TargetRailsVersion: 7.0
+  NewCops: enable
+  Exclude:
+    - 'bin/**/*'
+    - 'config/**/*'
+    - 'db/**/*'
+    - 'tmp/**/*'
+    - 'vendor/**/*'
+
+Metrics/BlockLength:
+  Max: 150
+
+RSpec/MultipleExpectations:
+  Max: 5
+
+Style/HashSyntax:
+  EnforcedShorthandSyntax: either
+
+Style/Documentation:
+  Enabled: false

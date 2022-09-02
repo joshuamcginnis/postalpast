@@ -1,3 +1,5 @@
+# frozen_string_literal: true
+
 ActiveAdmin.register Photo do
   permit_params :artifact_id, :image, :face
 
