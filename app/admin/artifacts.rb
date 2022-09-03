@@ -1,27 +1,28 @@
 # frozen_string_literal: true
 
 ActiveAdmin.register Artifact do
-  permit_params :subject_address,
-                :kind,
+  permit_params :kind,
                 :addressed_to_name,
                 :addressed_from_name,
                 :addressed_to_message,
                 :color,
                 :subject,
                 :postmarked_at,
-                :addressed_to_address,
-                :addressed_from_address,
+                subject_address: Artifact::ADDRESS_FIELD_ATTRIBUTES,
+                to_address: Artifact::ADDRESS_FIELD_ATTRIBUTES,
+                from_address: Artifact::ADDRESS_FIELD_ATTRIBUTES,
                 photos_attributes: %i[id image face _destroy]
 
   config.sort_order = 'created_at_asc'
 
+  # list artifacts page
   index do
     selectable_column
 
     column :id
 
     column 'Subject' do |artifact|
-      link_to(artifact.subject, admin_artifact_path(artifact),
+      link_to(artifact.subject, edit_admin_artifact_path(artifact),
               target: '_blank', rel: 'noopener')
     end
 
@@ -45,11 +46,14 @@ ActiveAdmin.register Artifact do
               target: '_blank', rel: 'noopener')
     end
 
-    column 'Created', :created_at
     column 'Updated', :updated_at
-    actions
+
+    column 'Actions' do |artifact|
+      link_to 'Edit', edit_admin_artifact_path(artifact), class: 'button'
+    end
   end
 
+  # show artifact
   show do
     panel 'Photos' do
       attributes_table_for artifact.photos do
@@ -89,7 +93,7 @@ ActiveAdmin.register Artifact do
               h3 photo.face.camelcase
               div link_to \
                 image_tag(photo.image.derivation_url(:thumbnail, 400, 300)),
-                edit_admin_photo_path(photo), target: '_blank', rel: 'noopener'
+                          photo.image_url, target: '_blank', rel: 'noopener'
             end
           end
 
@@ -105,12 +109,14 @@ ActiveAdmin.register Artifact do
           f.inputs do
             f.input :subject, label: 'Subject Title'
             f.input :color
-            li h4 'Subject Address'
+            li b 'Subject Address'
             f.fields_for :subject_address, label: 'Subject Address' do |a|
-              a.input :street
-              a.input :city
-              a.input :state
-              a.input :postcode
+              a.input :street,           input_html: { value: f.object[:subject_address]['street'] }
+              a.input :city,             input_html: { value: f.object[:subject_address]['city'] }
+              a.input :state,            input_html: { value: f.object[:subject_address]['state'] }
+              a.input :postcode,         input_html: { value: f.object[:subject_address]['postcode'] }
+              a.input :lat, as: :hidden, input_html: { value: f.object[:subject_address]['lat'] }
+              a.input :lon, as: :hidden, input_html: { value: f.object[:subject_address]['lon'] }
             end
           end
         end
@@ -120,7 +126,7 @@ ActiveAdmin.register Artifact do
             f.inputs 'Addressed To Details' do
               f.input :addressed_to_name
               f.input :addressed_to_message, input_html: { rows: 4 }
-              f.fields_for :addressed_to_address do |a|
+              f.fields_for :to_address do |a|
                 a.input :street
                 a.input :city
                 a.input :state
@@ -132,7 +138,7 @@ ActiveAdmin.register Artifact do
           column do
             f.inputs 'Addressed From Details' do
               f.input :addressed_from_name
-              f.fields_for :addressed_from_address do |a|
+              f.fields_for :from_address do |a|
                 a.input :street
                 a.input :city
                 a.input :state
