@@ -6,7 +6,7 @@ class Artifact < ApplicationRecord
                       to_address
                       from_address].freeze
 
-  ADDRESS_FIELD_ATTRIBUTES = %w[street city state postcode lat lon].freeze
+  ADDRESS_FIELD_ATTRIBUTES = %w[street city state postcode].freeze
 
   enum :kind, [:postcard], default: :postcard
 

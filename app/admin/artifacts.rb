@@ -110,13 +110,12 @@ ActiveAdmin.register Artifact do
             f.input :subject, label: 'Subject Title'
             f.input :color
             li b 'Subject Address'
+
             f.fields_for :subject_address, label: 'Subject Address' do |a|
               a.input :street,   as: :hstore_address
               a.input :city,     as: :hstore_address
               a.input :state,    as: :hstore_address
               a.input :postcode, as: :hstore_address
-              a.input :lat,      as: :hstore_address
-              a.input :lon,      as: :hstore_address
             end
           end
         end
@@ -131,8 +130,6 @@ ActiveAdmin.register Artifact do
                 a.input :city,     as: :hstore_address
                 a.input :state,    as: :hstore_address
                 a.input :postcode, as: :hstore_address
-                a.input :lat,      as: :hstore_address
-                a.input :lon,      as: :hstore_address
               end
             end
           end
@@ -145,8 +142,6 @@ ActiveAdmin.register Artifact do
                 a.input :city,     as: :hstore_address
                 a.input :state,    as: :hstore_address
                 a.input :postcode, as: :hstore_address
-                a.input :lat,      as: :hstore_address
-                a.input :lon,      as: :hstore_address
               end
             end
           end

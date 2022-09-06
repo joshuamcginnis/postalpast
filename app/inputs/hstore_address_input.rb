@@ -8,7 +8,7 @@ class HstoreAddressInput < Formtastic::Inputs::StringInput
   private
 
   def hstore_field_value
-    parent[parent_field_name][method.to_s]
+    parent[parent_field_name].try(:[], method.to_s)
   end
 
   def parent
