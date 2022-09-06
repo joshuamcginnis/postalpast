@@ -46,4 +46,8 @@ group :development do
   gem 'spring'
 end
 
+group :test do
+  gem 'simplecov', require: false
+end
+
 gem 'tailwindcss-rails', '~> 2.0'
