@@ -19,6 +19,10 @@ class Artifact < ApplicationRecord
 
   after_validation :geocode_addresses, unless: -> { changed_addresses.empty? }
 
+  def next
+    self.class.where(self.class.arel_table[:id].gt(id)).limit(1).first
+  end
+
   def geocode_addresses
     self.class::ADDRESS_FIELDS.each do |field|
       address = self[field]

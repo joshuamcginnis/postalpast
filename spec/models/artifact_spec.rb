@@ -98,4 +98,18 @@ RSpec.describe Artifact do
       end
     end
   end
+
+  describe '#next' do
+    before do
+      described_class.create(id: 1)
+      described_class.create(id: 2)
+      described_class.create(id: 5)
+    end
+
+    it 'returns the next record by id' do
+      a = described_class.find(1)
+      expect(a.next.id).to eq(2)
+      expect(a.next.next.id).to eq(5)
+    end
+  end
 end

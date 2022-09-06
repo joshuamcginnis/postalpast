@@ -15,6 +15,18 @@ ActiveAdmin.register Artifact do
 
   config.sort_order = 'created_at_asc'
 
+  controller do
+    def update
+      super do |success|
+        success.html { redirect_to collection_path }
+      end
+    end
+  end
+
+  action_item :save_and_next, only: :edit do
+    link_to 'Save and next', edit_admin_artifact_path(artifact.next)
+  end
+
   # list artifacts page
   index do
     selectable_column
