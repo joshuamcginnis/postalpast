@@ -38,3 +38,4 @@ yarn-error.log
 !/app/assets/builds/.keep
 
 spec/examples.txt
+coverage
