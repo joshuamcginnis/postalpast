@@ -93,7 +93,7 @@ ActiveAdmin.register Artifact do
               h3 photo.face.camelcase
               div link_to \
                 image_tag(photo.image.derivation_url(:thumbnail, 400, 300)),
-                          photo.image_url, target: '_blank', rel: 'noopener'
+                photo.image_url, target: '_blank', rel: 'noopener'
             end
           end
 
@@ -111,12 +111,12 @@ ActiveAdmin.register Artifact do
             f.input :color
             li b 'Subject Address'
             f.fields_for :subject_address, label: 'Subject Address' do |a|
-              a.input :street,           input_html: { value: f.object[:subject_address]['street'] }
-              a.input :city,             input_html: { value: f.object[:subject_address]['city'] }
-              a.input :state,            input_html: { value: f.object[:subject_address]['state'] }
-              a.input :postcode,         input_html: { value: f.object[:subject_address]['postcode'] }
-              a.input :lat, as: :hidden, input_html: { value: f.object[:subject_address]['lat'] }
-              a.input :lon, as: :hidden, input_html: { value: f.object[:subject_address]['lon'] }
+              a.input :street,   as: :hstore_address
+              a.input :city,     as: :hstore_address
+              a.input :state,    as: :hstore_address
+              a.input :postcode, as: :hstore_address
+              a.input :lat,      as: :hstore_address
+              a.input :lon,      as: :hstore_address
             end
           end
         end
@@ -127,10 +127,12 @@ ActiveAdmin.register Artifact do
               f.input :addressed_to_name
               f.input :addressed_to_message, input_html: { rows: 4 }
               f.fields_for :to_address do |a|
-                a.input :street
-                a.input :city
-                a.input :state
-                a.input :postcode
+                a.input :street,   as: :hstore_address
+                a.input :city,     as: :hstore_address
+                a.input :state,    as: :hstore_address
+                a.input :postcode, as: :hstore_address
+                a.input :lat,      as: :hstore_address
+                a.input :lon,      as: :hstore_address
               end
             end
           end
@@ -139,10 +141,12 @@ ActiveAdmin.register Artifact do
             f.inputs 'Addressed From Details' do
               f.input :addressed_from_name
               f.fields_for :from_address do |a|
-                a.input :street
-                a.input :city
-                a.input :state
-                a.input :postcode
+                a.input :street,   as: :hstore_address
+                a.input :city,     as: :hstore_address
+                a.input :state,    as: :hstore_address
+                a.input :postcode, as: :hstore_address
+                a.input :lat,      as: :hstore_address
+                a.input :lon,      as: :hstore_address
               end
             end
           end

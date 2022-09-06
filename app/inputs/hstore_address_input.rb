@@ -1,3 +1,5 @@
+# frozen_string_literal: true
+
 class HstoreAddressInput < Formtastic::Inputs::StringInput
   def input_html_options
     super.merge(value: hstore_field_value)
