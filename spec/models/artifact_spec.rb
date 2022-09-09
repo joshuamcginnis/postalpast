@@ -112,4 +112,19 @@ RSpec.describe Artifact do
       expect(a.next.next.id).to eq(5)
     end
   end
+
+  describe '#postmarked?' do
+    context 'when there is a postmark' do
+      it 'returns true' do
+        expect(described_class.new(postmarked_at: Date.new).postmarked?)
+          .to be true
+      end
+    end
+
+    context 'when there is no postmark' do
+      it 'returns false' do
+        expect(described_class.new.postmarked?).to be false
+      end
+    end
+  end
 end
