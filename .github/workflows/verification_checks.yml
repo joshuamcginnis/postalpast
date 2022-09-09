@@ -70,3 +70,9 @@ jobs:
           #sudo apt-get -yqq install libpq-dev
           bundle exec rails db:prepare
           bundle exec rspec
+
+      - name: Simplecov Report
+        uses: aki77/simplecov-report-action@v1
+        with:
+          failedThreshold: 50
+          token: ${{ secrets.GITHUB_TOKEN }}
