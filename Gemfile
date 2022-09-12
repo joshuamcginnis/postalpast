@@ -48,6 +48,7 @@ end
 
 group :test do
   gem 'simplecov', require: false
+  gem 'database_cleaner-active_record'
 end
 
 gem 'tailwindcss-rails', '~> 2.0'
