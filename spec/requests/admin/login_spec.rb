@@ -10,6 +10,16 @@ RSpec.describe '/admin/login' do
     end
   end
 
+  context 'when accessing a resource not logged in' do
+    it 'redirects to the previous' do
+      get '/admin/photos'
+      expect(response).to redirect_to(admin_login_path)
+
+      post '/admin/login', params: { username: 'test', password: 'test' }
+      expect(response).to redirect_to('/admin/photos')
+    end
+  end
+
   describe 'login page' do
     context 'with incorrect login credentials' do
       it 'reloads the login page' do
