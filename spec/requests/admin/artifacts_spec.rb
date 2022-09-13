@@ -12,13 +12,17 @@ RSpec.describe '/admin/artifacts' do
     expect(response).to be_ok
   end
 
-  it 'shows the artifact with photos' do
-    get admin_artifact_path(artifact.id)
-    expect(response).to be_ok
+  describe 'show artifact' do
+    it 'shows the artifact with photos' do
+      get admin_artifact_path(artifact.id)
+      expect(response).to be_ok
+    end
   end
 
-  it 'renders edit artifact form' do
-    get edit_admin_artifact_path(artifact.id)
-    expect(response).to be_ok
+  describe 'edit artifact' do
+    it 'renders edit artifact form' do
+      get edit_admin_artifact_path(artifact.id)
+      expect(response).to be_ok
+    end
   end
 end
