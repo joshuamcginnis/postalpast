@@ -2,6 +2,7 @@
 
 require 'database_cleaner/active_record'
 require 'simplecov'
+require 'support/admin_helpers'
 
 SimpleCov.start do
   add_filter ['spec/rails_helper.rb',
@@ -24,6 +25,8 @@ end
 #
 # See https://rubydoc.info/gems/rspec-core/RSpec/Core/Configuration
 RSpec.configure do |config|
+  config.include AdminHelpers
+
   # rspec-expectations config goes here. You can use an alternate
   # assertion/expectation library such as wrong or the stdlib/minitest
   # assertions if you prefer.
