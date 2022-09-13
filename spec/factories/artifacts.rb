@@ -12,5 +12,10 @@ FactoryBot.define do
     postmark_address     {}
     to_address           {}
     from_address         {}
+
+    trait :with_photos do
+      photos { [create(:photo, face: :front),
+                create(:photo, face: :back)] }
+    end
   end
 end

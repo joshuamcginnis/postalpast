@@ -24,7 +24,7 @@ ActiveAdmin.register Artifact do
   end
 
   action_item :save_and_next, only: :edit do
-    link_to 'Save and next', edit_admin_artifact_path(artifact.next)
+    link_to 'Save and next', edit_admin_artifact_path(artifact.next) if artifact.next
   end
 
   # list artifacts page
@@ -45,17 +45,21 @@ ActiveAdmin.register Artifact do
     column :postmarked_at
 
     column 'Front' do |artifact|
-      photo = artifact.photos.find_by(face: :front).image
-      link_to(image_tag(photo.derivation_url(:thumbnail, 100, 100)),
-              photo.url,
-              target: '_blank', rel: 'noopener')
+      photo = artifact.photos.find_by(face: :front)&.image
+      if photo
+        link_to(image_tag(photo.derivation_url(:thumbnail, 100, 100)),
+                photo.url,
+                target: '_blank', rel: 'noopener')
+      end
     end
 
     column 'Back' do |artifact|
-      photo = artifact.photos.find_by(face: :back).image
-      link_to(image_tag(photo.derivation_url(:thumbnail, 100, 100)),
-              photo.url,
-              target: '_blank', rel: 'noopener')
+      photo = artifact.photos.find_by(face: :back)&.image
+      if photo
+        link_to(image_tag(photo.derivation_url(:thumbnail, 100, 100)),
+                photo.url,
+                target: '_blank', rel: 'noopener')
+      end
     end
 
     column 'Updated', :updated_at
