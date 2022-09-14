@@ -8,7 +8,8 @@ class AuthController < ApplicationController
   def login
     if valid_credentials?
       session[:user] = { admin: true }
-      redirect_to admin_root_path
+      redirect_to session[:return_path] || admin_root_path
+      session.delete(:return_path)
     else
       flash.now.alert = 'Invalid password.'
       render :index

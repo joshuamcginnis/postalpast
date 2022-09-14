@@ -87,5 +87,44 @@ RSpec.describe Artifact do
         expect(Geocoder).not_to have_received(:search)
       end
     end
+
+    context 'when there are no results' do
+      before { allow(Geocoder).to receive(:search).and_return([]) }
+
+      it 'does not update lat, lon' do
+        artifact.save
+        expect(artifact.subject_address['lat']).to be_nil
+        expect(artifact.subject_address['lon']).to be_nil
+      end
+    end
+  end
+
+  describe '#next' do
+    before do
+      described_class.create(id: 1)
+      described_class.create(id: 2)
+      described_class.create(id: 5)
+    end
+
+    it 'returns the next record by id' do
+      a = described_class.find(1)
+      expect(a.next.id).to eq(2)
+      expect(a.next.next.id).to eq(5)
+    end
+  end
+
+  describe '#postmarked?' do
+    context 'when there is a postmark' do
+      it 'returns true' do
+        expect(described_class.new(postmarked_at: Date.new).postmarked?)
+          .to be true
+      end
+    end
+
+    context 'when there is no postmark' do
+      it 'returns false' do
+        expect(described_class.new.postmarked?).to be false
+      end
+    end
   end
 end
