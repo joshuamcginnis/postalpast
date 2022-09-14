@@ -1,3 +1,5 @@
+# frozen_string_literal: true
+
 require './spec/support/shrine_image_test_fixture'
 
 FactoryBot.define do

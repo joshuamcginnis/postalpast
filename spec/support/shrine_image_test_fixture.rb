@@ -1,3 +1,5 @@
+# frozen_string_literal: true
+
 module ShrineImageTestFixture
   module_function
 
@@ -7,12 +9,12 @@ module ShrineImageTestFixture
     attacher = Shrine::Attacher.new
     attacher.set(uploaded_image)
 
-    ## if you're processing derivatives
-    #attacher.set_derivatives(
-    #  large:  uploaded_image,
-    #  medium: uploaded_image,
-    #  small:  uploaded_image,
-    #)
+    # # if you're processing derivatives
+    # attacher.set_derivatives(
+    #   large:  uploaded_image,
+    #   medium: uploaded_image,
+    #   small:  uploaded_image,
+    # )
 
     attacher.column_data
   end
@@ -25,7 +27,7 @@ module ShrineImageTestFixture
     uploaded_file.metadata.merge!(
       'size'      => File.size(file.path),
       'mime_type' => 'image/png',
-      'filename'  => 'test.png',
+      'filename'  => 'test.png'
     )
 
     uploaded_file

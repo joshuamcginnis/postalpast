@@ -3,14 +3,14 @@
 require 'rails_helper'
 require 'shrine_image_uploader'
 
-RSpec.describe ShrineImageUploader do
-  INVALID_IMAGE = 'spec/fixtures/data/black.jpg'
-  VALID_IMAGE = 'spec/fixtures/data/image.png'
+INVALID_IMAGE = 'spec/fixtures/data/black.jpg'
+VALID_IMAGE = 'spec/fixtures/data/image.png'
 
+RSpec.describe ShrineImageUploader do
   describe 'validation' do
+    let(:photo) { Photo.new(image: File.open(INVALID_IMAGE)) }
+
     it 'enforces valid extension' do
-      photo = Photo.new
-      photo.image = File.open(INVALID_IMAGE)
       expect(photo.valid?).to be false
       expect(photo.errors[:image])
         .to eq(['extension must be one of: png',
