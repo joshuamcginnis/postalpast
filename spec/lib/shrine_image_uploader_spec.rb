@@ -19,13 +19,29 @@ RSpec.describe ShrineImageUploader do
     end
   end
 
-  #describe 'derivations' do
-  #  describe 'thumbnail' do
-  #    it 'returns a url' do
-  #      photo = Photo.new(artifact: create(:artifact),
-  #                       image: File.open(VALID_IMAGE))
-  #      p photo.image.derivation_url(:thumbnail, 10, 10)
-  #    end
-  #  end
-  #end
+  describe 'derivations' do
+    describe 'thumbnail' do
+      let(:mini_magic_double) do
+        instance_double(ImageProcessing::MiniMagick::Processor,
+                        method_missing: nil)
+      end
+
+      before do
+        allow(ImageProcessing::MiniMagick).to receive(:source)
+          .and_return(mini_magic_double)
+
+        allow(mini_magic_double).to receive(:method_missing)
+      end
+
+      it 'returns a url' do
+        described_class.derivations[:thumbnail].call('file', '10', '20')
+
+        expect(ImageProcessing::MiniMagick).to have_received(:source)
+          .with('file')
+
+        expect(mini_magic_double).to have_received(:method_missing)
+          .with(:resize_to_limit!, 10, 20)
+      end
+    end
+  end
 end
