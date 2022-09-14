@@ -1,5 +1,6 @@
 # frozen_string_literal: true
 
+# rubocop:disable Metrics/BlockLength
 ActiveAdmin.register Artifact do
   permit_params :kind,
                 :addressed_to_name,
@@ -24,7 +25,9 @@ ActiveAdmin.register Artifact do
   end
 
   action_item :save_and_next, only: :edit do
-    link_to 'Save and next', edit_admin_artifact_path(artifact.next) if artifact.next
+    if artifact.next
+      link_to 'Save and next', edit_admin_artifact_path(artifact.next)
+    end
   end
 
   # list artifacts page
@@ -176,3 +179,4 @@ ActiveAdmin.register Artifact do
     end
   end
 end
+# rubocop:enable Metrics/BlockLength

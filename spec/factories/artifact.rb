@@ -19,12 +19,13 @@ FactoryBot.define do
     addressed_to_message { Faker::Quote.yoda }
     color                { true }
     subject              { Faker::Book.title }
-
-    # addresses
     subject_address      { address }
-    postmark_address     { address }
-    to_address           { address }
-    from_address         { address }
+
+    trait :with_addresses do
+      postmark_address     { address }
+      to_address           { address }
+      from_address         { address }
+    end
 
     trait :with_photos do
       photos do

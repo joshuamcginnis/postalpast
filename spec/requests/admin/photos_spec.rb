@@ -3,11 +3,12 @@
 require 'rails_helper'
 
 RSpec.describe '/admin/photos' do
-  let!(:photo) { create(:photo) }
+  let(:photo) { create(:photo) }
 
-  before { login_as_admin }
+  before(:all) { login_as_admin }
 
   it 'shows pictures' do
+    photo
     get admin_photos_path
     expect(response).to be_ok
   end

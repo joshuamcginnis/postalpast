@@ -25,7 +25,12 @@ ActiveAdmin.register Photo do
     f.semantic_errors
 
     f.inputs do
-      f.input :artifact, as: :select, collection: Artifact.all.collect { |a| ["#{a.id} - #{a.subject}", a.id] }
+      f.input :artifact,
+              as: :select,
+              collection: Artifact.all.collect do |a|
+                ["#{a.id} - #{a.subject}", a.id]
+              end
+
       f.input :face
       f.input :image, as: :file, label: 'Image File'
     end
