@@ -4,12 +4,13 @@ require 'rails_helper'
 
 RSpec.describe '/admin/artifacts' do
   let(:artifact) { create(:artifact, :with_photos) }
+  let(:artifacts_collection) { [artifact, create(:artifact)] }
 
   before(:all) { login_as_admin }
 
   describe 'list artifacts' do
     it 'shows artifacts' do
-      artifact
+      artifacts_collection
       get admin_artifacts_path
       expect(response).to be_ok
     end
@@ -24,7 +25,7 @@ RSpec.describe '/admin/artifacts' do
 
   describe 'edit artifact' do
     it 'renders edit artifact form' do
-      get edit_admin_artifact_path(artifact.id)
+      get edit_admin_artifact_path(artifacts_collection.first.id)
       expect(response).to be_ok
     end
 
