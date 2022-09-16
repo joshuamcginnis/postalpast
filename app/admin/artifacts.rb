@@ -8,6 +8,7 @@ ActiveAdmin.register Artifact do
                 :addressed_to_message,
                 :color,
                 :subject,
+                :subject_date,
                 :subject_description,
                 :postmarked_at,
                 subject_address: Artifact::ADDRESS_FIELD_ATTRIBUTES,
@@ -87,6 +88,7 @@ ActiveAdmin.register Artifact do
 
     attributes_table do
       row :subject
+      row :subject_date
       row :subject_description
       row :subject_address
       row :addressed_to_name
@@ -129,6 +131,7 @@ ActiveAdmin.register Artifact do
         panel 'General Subject Details' do
           f.inputs do
             f.input :subject, label: 'Subject Title'
+            f.input :subject_date, as: :datepicker
             f.input :subject_description, input_html: { rows: 10 }
             f.input :color
             li b 'Subject Address'
