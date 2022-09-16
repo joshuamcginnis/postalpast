@@ -36,3 +36,6 @@ Layout/LineLength:
 Layout/HashAlignment:
   EnforcedHashRocketStyle: table
 
+Naming/VariableNumber:
+  EnforcedStyle: snake_case
+  AllowedIdentifiers: [s3]

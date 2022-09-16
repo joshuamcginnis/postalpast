@@ -7,25 +7,29 @@ RSpec.describe Artifact do
   subject(:artifact) do
     described_class.new(
       subject_address: {
-        street: '1111 Columbia Ave',
+        business_name: 'Columbia Apartments',
+        address_line_1: '1111 Columbia Ave',
+        address_line_2: 'APT 10',
         city: 'Franklin',
         state: 'TN',
         postcode: '37064'
       },
       postmark_address: {
-        street: '239 Franklin Rd',
+        address_line_1: '239 Franklin Rd',
         city: 'Franklin',
         state: 'TN',
         postcode: '37064'
       },
       to_address: {
-        street: '56 Burrow Lane',
+        address_line_1: '56 Burrow St.',
+        address_line_2: '#4',
         city: 'Nashville',
         state: 'TN',
         postcode: '37064'
       },
       from_address: {
-        street: '7619 Narrow Blvd',
+        business_name: 'Century Cleaners',
+        address_line_1: '7619 Narrow Blvd',
         city: 'Mission',
         state: 'TN',
         postcode: '38061'
@@ -36,7 +40,7 @@ RSpec.describe Artifact do
   describe '#full_subject_address' do
     it 'returns the full address of the subject' do
       expect(artifact.full_subject_address)
-        .to eq('1111 Columbia Ave, Franklin, TN 37064')
+        .to eq('1111 Columbia Ave, APT 10, Franklin, TN 37064')
     end
   end
 
@@ -50,7 +54,7 @@ RSpec.describe Artifact do
   describe '#full_to_address' do
     it 'returns the full postmark address' do
       expect(artifact.full_to_address)
-        .to eq('56 Burrow Lane, Nashville, TN 37064')
+        .to eq('56 Burrow St., #4, Nashville, TN 37064')
     end
   end
 
