@@ -6,7 +6,10 @@ class Artifact < ApplicationRecord
                       to_address
                       from_address].freeze
 
-  ADDRESS_FIELD_ATTRIBUTES = %w[street city state postcode].freeze
+  ADDRESS_FIELD_ATTRIBUTES = %w[business_name
+                                address_line_1
+                                address_line_2
+                                city state postcode].freeze
 
   enum :kind, [:postcard], default: :postcard
 
@@ -28,7 +31,7 @@ class Artifact < ApplicationRecord
       address = self[field]
       next if address.nil?
 
-      full_address = full_address_for(address)
+      full_address = full_address_from(address)
       coordinates = Geocoder.search(full_address).first&.coordinates
 
       address['lat'], address['lon'] = coordinates if coordinates
@@ -40,19 +43,19 @@ class Artifact < ApplicationRecord
   end
 
   def full_subject_address
-    full_address_for(subject_address)
+    full_address_from(subject_address)
   end
 
   def full_postmark_address
-    full_address_for(postmark_address)
+    full_address_from(postmark_address)
   end
 
   def full_to_address
-    full_address_for(to_address)
+    full_address_from(to_address)
   end
 
   def full_from_address
-    full_address_for(from_address)
+    full_address_from(from_address)
   end
 
   private
@@ -61,8 +64,13 @@ class Artifact < ApplicationRecord
     changed & ADDRESS_FIELDS.map(&:to_s)
   end
 
-  def full_address_for(address_field)
-    "#{address_field['street']}, #{address_field['city']}, " \
-      "#{address_field['state']} #{address_field['postcode']}"
+  def full_address_from(field)
+    full_address = "#{field['address_line_1']}, "
+
+    if field['address_line_2'].present?
+      full_address << "#{field['address_line_2']}, "
+    end
+
+    full_address << "#{field['city']}, #{field['state']} #{field['postcode']}"
   end
 end

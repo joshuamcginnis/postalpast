@@ -5,10 +5,12 @@ FactoryBot.define do
     transient do
       address do
         {
-          'street'   => Faker::Address.street_address,
-          'city'     => Faker::Address.city,
-          'state'    => Faker::Address.state_abbr,
-          'postcode' => Faker::Address.postcode
+          'business_name' => Faker::Company.name,
+          'address_1'     => Faker::Address.street_address,
+          'address_2'     => Faker::Address.secondary_address,
+          'city'          => Faker::Address.city,
+          'state'         => Faker::Address.state_abbr,
+          'postcode'      => Faker::Address.postcode
         }
       end
     end
