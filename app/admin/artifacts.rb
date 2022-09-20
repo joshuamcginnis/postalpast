@@ -115,7 +115,7 @@ ActiveAdmin.register Artifact do
             artifact.photos.order(:face).each do |photo|
               h3 photo.face.camelcase
               div link_to \
-                image_tag(photo.image.derivation_url(:thumbnail, 400, 300)),
+                image_tag(photo.image.derivation_url(:thumbnail, 250, 200)),
                 photo.image_url, target: '_blank', rel: 'noopener'
             end
           end
@@ -190,15 +190,22 @@ ActiveAdmin.register Artifact do
           end
         end
 
-        f.has_many :publisher, heading: 'Publisher' do |p|
-          p.input :name
-        end
-
-        f.has_many :stamp, heading: 'Stamps' do |p|
-          p.input :name
-        end
-
         f.actions
+      end
+
+      column do
+        panel 'Stamp' do
+          f.has_many :stamp, heading: :none do |s|
+            s.input :name
+            s.input :price
+          end
+        end
+
+        panel 'Publisher' do
+          f.has_many :publisher, heading: :none do |p|
+            p.input :name
+          end
+        end
       end
     end
   end
