@@ -65,6 +65,8 @@ class Artifact < ApplicationRecord
   end
 
   def full_address_from(field)
+    return if field.nil?
+
     full_address = "#{field['address_line_1']}, "
 
     if field['address_line_2'].present?

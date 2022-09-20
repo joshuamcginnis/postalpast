@@ -43,7 +43,7 @@ ActiveAdmin.register Artifact do
               target: '_blank', rel: 'noopener')
     end
 
-    column :subject_address
+    column :full_subject_address
     column :subject_date
     column :color
     column :postmarked?
