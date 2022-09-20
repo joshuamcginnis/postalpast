@@ -178,6 +178,18 @@ ActiveAdmin.register Artifact do
           end
         end
 
+        columns do
+          panel 'Postmark Details' do
+            f.inputs do
+              f.input :postmarked_at, as: :datetime_picker
+              f.fields_for :to_address, label: 'Postmark Address' do |a|
+                a.input :city,           as: :hstore_address
+                a.input :state,          as: :hstore_address
+              end
+            end
+          end
+        end
+
         f.has_many :publisher, heading: 'Publisher' do |p|
           p.input :name
         end
