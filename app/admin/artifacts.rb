@@ -137,12 +137,13 @@ ActiveAdmin.register Artifact do
             li b 'Subject Address'
 
             f.fields_for :subject_address, label: 'Subject Address' do |a|
-              a.input :business_name,  as: :hstore_address
-              a.input :address_line_1, as: :hstore_address
-              a.input :address_line_2, as: :hstore_address
-              a.input :city,           as: :hstore_address
-              a.input :state,          as: :hstore_address
-              a.input :postcode,       as: :hstore_address
+              a.input :business_name,  as: :hstore_string
+              a.input :address_line_1, as: :hstore_string
+              a.input :address_line_2, as: :hstore_string
+              a.input :city,           as: :hstore_string
+              a.input :state,          as: :hstore_select,
+                                       collection: StatesHelper.collection
+              a.input :postcode,       as: :hstore_string
             end
           end
         end
@@ -153,12 +154,12 @@ ActiveAdmin.register Artifact do
               f.input :addressed_to_name
               f.input :addressed_to_message, input_html: { rows: 4 }
               f.fields_for :to_address do |a|
-                a.input :business_name,  as: :hstore_address
-                a.input :address_line_1, as: :hstore_address
-                a.input :address_line_2, as: :hstore_address
-                a.input :city,           as: :hstore_address
-                a.input :state,          as: :hstore_address
-                a.input :postcode,       as: :hstore_address
+                a.input :business_name,  as: :hstore_string
+                a.input :address_line_1, as: :hstore_string
+                a.input :address_line_2, as: :hstore_string
+                a.input :city,           as: :hstore_string
+                a.input :state,          as: :hstore_string
+                a.input :postcode,       as: :hstore_string
               end
             end
           end
@@ -167,12 +168,12 @@ ActiveAdmin.register Artifact do
             f.inputs 'Addressed From Details' do
               f.input :addressed_from_name
               f.fields_for :from_address do |a|
-                a.input :business_name,  as: :hstore_address
-                a.input :address_line_1, as: :hstore_address
-                a.input :address_line_2, as: :hstore_address
-                a.input :city,           as: :hstore_address
-                a.input :state,          as: :hstore_address
-                a.input :postcode,       as: :hstore_address
+                a.input :business_name,  as: :hstore_string
+                a.input :address_line_1, as: :hstore_string
+                a.input :address_line_2, as: :hstore_string
+                a.input :city,           as: :hstore_string
+                a.input :state,          as: :hstore_string
+                a.input :postcode,       as: :hstore_string
               end
             end
           end
@@ -183,8 +184,8 @@ ActiveAdmin.register Artifact do
             f.inputs do
               f.input :postmarked_at, as: :datetime_picker
               f.fields_for :to_address, label: 'Postmark Address' do |a|
-                a.input :city,           as: :hstore_address
-                a.input :state,          as: :hstore_address
+                a.input :city,           as: :hstore_string
+                a.input :state,          as: :hstore_string
               end
             end
           end
