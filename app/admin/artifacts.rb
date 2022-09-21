@@ -1,5 +1,7 @@
 # frozen_string_literal: true
 
+require 'states_helper'
+
 # rubocop:disable Metrics/BlockLength
 ActiveAdmin.register Artifact do
   permit_params :kind,
@@ -158,7 +160,8 @@ ActiveAdmin.register Artifact do
                 a.input :address_line_1, as: :hstore_string
                 a.input :address_line_2, as: :hstore_string
                 a.input :city,           as: :hstore_string
-                a.input :state,          as: :hstore_string
+                a.input :state,          as: :hstore_select,
+                                         collection: StatesHelper.collection
                 a.input :postcode,       as: :hstore_string
               end
             end
@@ -172,7 +175,8 @@ ActiveAdmin.register Artifact do
                 a.input :address_line_1, as: :hstore_string
                 a.input :address_line_2, as: :hstore_string
                 a.input :city,           as: :hstore_string
-                a.input :state,          as: :hstore_string
+                a.input :state,          as: :hstore_select,
+                                         collection: StatesHelper.collection
                 a.input :postcode,       as: :hstore_string
               end
             end
@@ -185,7 +189,8 @@ ActiveAdmin.register Artifact do
               f.input :postmarked_at, as: :datetime_picker
               f.fields_for :to_address, label: 'Postmark Address' do |a|
                 a.input :city,           as: :hstore_string
-                a.input :state,          as: :hstore_string
+                a.input :state,          as: :hstore_select,
+                                         collection: StatesHelper.collection
               end
             end
           end

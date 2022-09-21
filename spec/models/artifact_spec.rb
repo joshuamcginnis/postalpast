@@ -37,7 +37,7 @@ RSpec.describe Artifact do
     )
   end
 
-  context 'address field is nil' do
+  context 'when address is nil' do
     it 'returns nil' do
       artifact = create(:artifact, subject_address: nil)
       expect(artifact.full_subject_address).to be_nil
